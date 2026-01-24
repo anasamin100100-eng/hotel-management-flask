@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Invoice</h3>
+
+<p><strong>Reservation ID:</strong> {{ reservation.id }}</p>
+<p><strong>Guest:</strong> {{ user.name }}</p>
+<p><strong>Room:</strong> {{ room.room_type }} (ID {{ room.id }})</p>
+<p><strong>Check-in:</strong> {{ reservation.check_in }}</p>
+<p><strong>Check-out:</strong> {{ reservation.check_out }}</p>
+
+<hr>
+
+<pre style="font-size:15px">
+Daily Price:     {{ "{:,.0f}".format(reservation.daily_price) }}
+Days:            {{ reservation.days }}
+Subtotal:        {{ "{:,.0f}".format(reservation.base_price) }}
+Tax (10%):       {{ "{:,.0f}".format(reservation.tax_amount) }}
+--------------------------------
+Total:           {{ "{:,.0f}".format(reservation.total_price) }}
+</pre>
+
+<p><strong>Paid:</strong> {{ "Yes" if reservation.paid else "No" }}</p>
+
+{% if not reservation.paid %}
+  <a href="{{ url_for('pay_page', reservation_id=reservation.id) }}"
+     class="btn btn-primary">Pay Now</a>
+{% endif %}
+
+<button onclick="window.print()" class="btn btn-secondary">
+  Print Invoice
+</button>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <h1>Welcome to Hotel Reservation System</h1>
+    <p class="lead">Search rooms, book, and pay — dynamic pricing included.</p>
+    <hr>
+    <p><a class="btn btn-primary" href="{{ url_for('search') }}">Search Rooms</a></p>
+  </div>
+{% endblock %}

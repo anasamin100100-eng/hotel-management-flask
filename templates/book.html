@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h3>Book Room {{ room.id }} ({{ room.room_type }})</h3>
+  <p>Price today: ${{ price }}</p>
+  <form method="post">
+    <div class="mb-3">
+      <label>Check-in Date</label>
+      <input
+          type="date"
+          name="check_in"
+          required
+          min="{{ date.today() }}"
+      >
+    </div>
+    <div class="mb-3">
+      <label>Check-out Date</label>
+      <input
+          type="date"
+          name="check_out"
+          required
+          min="{{ date.today() }}"
+      >
+    </div>
+    <div class="mb-3">
+      <label>Payment Method (simulated)</label>
+      <select class="form-select" name="payment_method">
+        <option value="">Pay at hotel (cash)</option>
+        <option value="card">Card</option>
+      </select>
+    </div>
+    <button class="btn btn-success">Confirm Booking</button>
+  </form>
+{% endblock %}
