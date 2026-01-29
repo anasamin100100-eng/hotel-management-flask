@@ -17,7 +17,8 @@ app.secret_key = os.environ.get("HOTEL_SECRET", "dev_secret_key")
 
 # DB config
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "hotel.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("postgresql://postgres:[YOUR-PASSWORD]@db.gxnyrrhzxsfsktznouzs.supabase.co:5432/postgres")
+
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -420,5 +421,4 @@ def init_db():
         db.session.commit()
 
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
