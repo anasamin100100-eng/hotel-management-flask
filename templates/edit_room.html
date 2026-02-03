@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <h3>Edit Room #{{ room.id }}</h3>
+    <form method="post">
+      <div class="mb-3">
+        <label for="room_type" class="form-label">Room Type</label>
+        <input type="text" class="form-control" id="room_type" name="room_type" value="{{ room.room_type }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="base_price" class="form-label">Base Price</label>
+        <input type="number" step="0.01" class="form-control" id="base_price" name="base_price" value="{{ room.base_price }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description">{{ room.description }}</textarea>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="is_available" name="is_available" {% if room.is_available %}checked{% endif %}>
+        <label class="form-check-label" for="is_available">Available</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

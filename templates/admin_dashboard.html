@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block content %}
+<h3>Admin Dashboard</h3>
+
+<h5>Add Room</h5>
+<form method="post" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <input
+      name="room_type"
+      class="form-control"
+      placeholder="Room Type (Single/Double/Suite)"
+      required
+    />
+  </div>
+  <div class="col-md-3">
+    <input
+      name="base_price"
+      class="form-control"
+      placeholder="Base Price"
+      required
+    />
+  </div>
+  <div class="col-md-4">
+    <input name="description" class="form-control" placeholder="Description" />
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-primary">Add Room</button>
+  </div>
+</form>
+
+<h5>Rooms</h5>
+<table class="table table-striped align-middle">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Base Price</th>
+      <th>Description</th>
+      <th>Available</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in rooms %}
+    <tr>
+      <td>{{ r.id }}</td>
+      <td>{{ r.room_type }}</td>
+      <td>{{ r.base_price }}</td>
+      <td>{{ r.description }}</td>
+      <td>{{ "Yes" if r.is_available else "No" }}</td>
+      <td>
+        <a
+          href="{{ url_for('edit_room', room_id=r.id) }}"
+          class="btn btn-sm btn-warning"
+          >Edit</a
+        >
+        <form
+          action="{{ url_for('delete_room', room_id=r.id) }}"
+          method="post"
+          style="display: inline"
+          onsubmit="return confirm('Delete this room?');"
+        >
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h5>Recent Reservations</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Room</th>
+      <th>Total</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for res in reservations %}
+    <tr>
+      <td>{{ res.id }}</td>
+      <td>{{ res.user_id }}</td>
+      <td>{{ res.room_id }}</td>
+      <td>{{ res.total_price }}</td>
+      <td>{{ res.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

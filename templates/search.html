@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Search Rooms</h3>
+
+<form method="post" class="row g-3">
+  <div class="col-md-3">
+    <label>Room Type</label>
+    <select class="form-select" name="room_type">
+      <option>Any</option>
+      <option>single</option>
+      <option>double</option>
+      <option>suite</option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <label>Max Price</label>
+    <input class="form-control" name="max_price" placeholder="e.g. 150">
+  </div>
+
+  <div class="col-12">
+    <button class="btn btn-info">Search</button>
+  </div>
+</form>
+
+<hr>
+
+<h4>Available Rooms</h4>
+
+{% if rooms %}
+  <div class="row">
+    {% for r in rooms %}
+    <div class="col-md-4">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ r.room_type }} - ${{ r.price_today }}
+          </h5>
+
+          <p class="card-text">{{ r.description }}</p>
+
+          <p>
+            {% if r.is_available %}
+              <span class="badge bg-success">Available</span>
+            {% else %}
+              <span class="badge bg-danger">Not Available</span>
+            {% endif %}
+          </p>
+
+          {% if r.is_available %}
+            <a href="{{ url_for('book', room_id=r.id) }}" class="btn btn-primary">Book</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No rooms found.</p>
+{% endif %}
+{% endblock %}

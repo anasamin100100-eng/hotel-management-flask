@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+  <h3>Pay for Reservation {{ reservation.id }}</h3>
+  <p>Total amount: ${{ reservation.total_price }}</p>
+  <form method="post">
+    <div class="mb-3">
+      <label>Payment Method</label>
+      <select class="form-select" name="method">
+        <option value="card">Card</option>
+        <option value="cash">Cash</option>
+      </select>
+    </div>
+    <input type="hidden" name="amount" value="{{ reservation.total_price }}">
+    <button class="btn btn-success">Pay</button>
+  </form>
+{% endblock %}
